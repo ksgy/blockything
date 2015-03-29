@@ -10,11 +10,14 @@ class Block {
         this.x = x;
         this.y = y;
         this.colour = COLOURS[Math.floor(Math.random() * COLOURS.length)];
+        this.checked = false;
     }
 }
 
 class BlockGrid {
+
     constructor () {
+        this.neighbours = [];
         this.grid = [];
 
         for (let x = 0; x < MAX_X; x++) {
@@ -55,6 +58,39 @@ class BlockGrid {
 
     blockClicked (e, block) {
         console.log(e, block);
+
+        this.neighbours = [];
+
+        if(block.x > 0 && block.y > 0 && block.x < MAX_X-1 && block.y < MAX_Y-1) {
+            let topBlock = this.grid[block.x][block.y+1];
+            let rightBlock = this.grid[block.x+1][block.y];
+            let bottomBlock = this.grid[block.x][block.y-1];
+            let leftBlock = this.grid[block.x-1][block.y];
+
+            let blockNeighbours = [topBlock, rightBlock, bottomBlock, leftBlock];
+
+            this.getNeighBour(block, blockNeighbours);
+        }
+
+
+    }
+
+    getNeighBour (block, blockNeighbours) {
+
+        block.checked = true;
+        // block.colour = 'grey';
+
+        for (let i = blockNeighbours.length - 1; i >= 0; i--) {
+            console.log(block.colour, 'blockNeighbours[i]', blockNeighbours[i]);
+
+            if(block.colour == blockNeighbours[i].colour){
+                console.log('blockelem', blockNeighbours[i]);
+                this.neighbours.push(blockNeighbours[i]);
+                if(block.checked == false) {
+                    this.getNeighBour(blockNeighbours[i], blockNeighbours);
+                }
+            }
+        };
     }
 }
 
