@@ -57,10 +57,11 @@ class BlockGrid {
     }
 
     blockClicked (e, block) {
-        console.log('v6');
+        console.log('v8');
 
         this.neighbours = [block];
         this.getNeighBour(block);
+        this.applyGravity();
 
     }
 
@@ -92,6 +93,17 @@ class BlockGrid {
         console.log('-- all neighbours', this.neighbours);
 
 
+    }
+
+    applyGravity () {
+        for (let i = this.neighbours.length -1; i >= 0; i--){
+            let x = this.neighbours[i].x;
+            let y = this.neighbours[i].y;
+            this.neighbours[i].colour = 'grey';
+        }
+
+        document.querySelector('#gridEl').innerHTML = '';
+        this.render();
     }
 }
 
