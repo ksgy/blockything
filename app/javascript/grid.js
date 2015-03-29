@@ -72,13 +72,19 @@ class BlockGrid {
 
     getNeighBour (block) {
 
-        // TODO check edges
-        let topBlock = this.grid[block.x][block.y+1];
-        let rightBlock = this.grid[block.x+1][block.y];
-        let bottomBlock = this.grid[block.x][block.y-1];
-        let leftBlock = this.grid[block.x-1][block.y];
+        if(block.x < 0 || block.x >= MAX_X || block.y < 0 || block.y >= MAX_Y || block.colour == 'grey') return;
+
+        let topBlock;
+        try { topBlock = this.grid[block.x][block.y+1] } catch(e){ console.log('e', e); };
+        let rightBlock;
+        try { rightBlock = this.grid[block.x+1][block.y] } catch(e){ console.log('e', e); };
+        let bottomBlock;
+        try { bottomBlock = this.grid[block.x][block.y-1] } catch(e){ console.log('e', e); };
+        let leftBlock;
+        try { leftBlock = this.grid[block.x-1][block.y] } catch(e){ console.log('e', e); };
 
         let blockNeighbours = [topBlock, rightBlock, bottomBlock, leftBlock];
+        console.log('blockNeighbours', blockNeighbours);
 
         block.checked = true;
         // block.colour = 'grey';
@@ -86,7 +92,7 @@ class BlockGrid {
         for (let i = blockNeighbours.length - 1; i >= 0; i--) {
             console.log(block.colour, 'neighbours: ', blockNeighbours[i]);
 
-            if(block.colour == blockNeighbours[i].colour){
+            if(blockNeighbours[i] && block.colour == blockNeighbours[i].colour){
                 console.log('same colour element: ', blockNeighbours[i]);
                 if(blockNeighbours[i].checked == false) {
                     console.log('recursive for: ', blockNeighbours[i]);
