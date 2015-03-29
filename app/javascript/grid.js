@@ -62,17 +62,22 @@ class BlockGrid {
     }
 
     blockClicked (e, block) {
-        console.log('v14');
+        console.log('v16');
 
         this.neighbours = [block];
-        this.getNeighBour(block);
-        this.applyGravity();
+        if(this.getNeighBour(block) != false) {
+            this.applyGravity();
+        }
+
 
     }
 
     getNeighBour (block) {
 
-        if(block.x < 0 || block.x >= MAX_X || block.y < 0 || block.y >= MAX_Y || block.colour == 'grey') return;
+
+        if(block.x < 0 || block.x >= MAX_X || block.y < 0 || block.y >= MAX_Y || block.colour == 'grey') {
+            return false;
+        };
 
         let topBlock;
         try { topBlock = this.grid[block.x][block.y+1] } catch(e){ console.log('e', e); };
