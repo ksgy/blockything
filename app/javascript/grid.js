@@ -57,11 +57,10 @@ class BlockGrid {
     }
 
     blockClicked (e, block) {
-        alert(4)
+        console.log('v6');
 
-        this.neighbours = [];
+        this.neighbours = [block];
         this.getNeighBour(block);
-
 
     }
 
