@@ -102,7 +102,7 @@ class BlockGrid {
             let x = this.neighbours[i].x;
             let y = this.neighbours[i].y;
             this.neighbours[i].colour = 'grey';
-            this.grid[x].move(y, MAX_Y - 1);
+
         }
 
         this.render();
