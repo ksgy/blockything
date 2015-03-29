@@ -58,7 +58,7 @@ class BlockGrid {
     }
 
     blockClicked (e, block) {
-        console.log('v10');
+        console.log('v13');
 
         this.neighbours = [block];
         this.getNeighBour(block);
@@ -68,6 +68,7 @@ class BlockGrid {
 
     getNeighBour (block) {
 
+        // TODO check edges
         let topBlock = this.grid[block.x][block.y+1];
         let rightBlock = this.grid[block.x+1][block.y];
         let bottomBlock = this.grid[block.x][block.y-1];
@@ -102,7 +103,6 @@ class BlockGrid {
             let x = this.neighbours[i].x;
             let y = this.neighbours[i].y;
             this.neighbours[i].colour = 'grey';
-
         }
 
         this.render();
