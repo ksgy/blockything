@@ -57,40 +57,42 @@ class BlockGrid {
     }
 
     blockClicked (e, block) {
-        console.log(e, block);
+        alert(4)
 
         this.neighbours = [];
-
-        if(block.x > 0 && block.y > 0 && block.x < MAX_X-1 && block.y < MAX_Y-1) {
-            let topBlock = this.grid[block.x][block.y+1];
-            let rightBlock = this.grid[block.x+1][block.y];
-            let bottomBlock = this.grid[block.x][block.y-1];
-            let leftBlock = this.grid[block.x-1][block.y];
-
-            let blockNeighbours = [topBlock, rightBlock, bottomBlock, leftBlock];
-
-            this.getNeighBour(block, blockNeighbours);
-        }
+        this.getNeighBour(block);
 
 
     }
 
-    getNeighBour (block, blockNeighbours) {
+    getNeighBour (block) {
+
+        let topBlock = this.grid[block.x][block.y+1];
+        let rightBlock = this.grid[block.x+1][block.y];
+        let bottomBlock = this.grid[block.x][block.y-1];
+        let leftBlock = this.grid[block.x-1][block.y];
+
+        let blockNeighbours = [topBlock, rightBlock, bottomBlock, leftBlock];
 
         block.checked = true;
         // block.colour = 'grey';
 
         for (let i = blockNeighbours.length - 1; i >= 0; i--) {
-            console.log(block.colour, 'blockNeighbours[i]', blockNeighbours[i]);
+            console.log(block.colour, 'neighbours: ', blockNeighbours[i]);
 
             if(block.colour == blockNeighbours[i].colour){
-                console.log('blockelem', blockNeighbours[i]);
-                this.neighbours.push(blockNeighbours[i]);
-                if(block.checked == false) {
-                    this.getNeighBour(blockNeighbours[i], blockNeighbours);
+                console.log('same colour element: ', blockNeighbours[i]);
+                if(blockNeighbours[i].checked == false) {
+                    console.log('recursive for: ', blockNeighbours[i]);
+                    this.getNeighBour(blockNeighbours[i]);
+                    this.neighbours.push(blockNeighbours[i]);
                 }
             }
         };
+
+        console.log('-- all neighbours', this.neighbours);
+
+
     }
 }
 
