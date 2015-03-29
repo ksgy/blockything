@@ -46,6 +46,10 @@ class BlockGrid {
                     id = `block_${x}x${y}`,
                     blockEl = document.createElement('div');
 
+                if(block.colour != 'grey'){
+                    block.checked = false;
+                }
+                // blockEl.innerHTML = block.checked;
                 blockEl.id = id;
                 blockEl.className = 'block';
                 blockEl.style.background = block.colour;
@@ -58,7 +62,7 @@ class BlockGrid {
     }
 
     blockClicked (e, block) {
-        console.log('v13');
+        console.log('v14');
 
         this.neighbours = [block];
         this.getNeighBour(block);
@@ -91,18 +95,16 @@ class BlockGrid {
                 }
             }
         };
-
         console.log('-- all neighbours', this.neighbours);
-
-
     }
 
     applyGravity () {
-        // TODO set checked = false to non-grey blocks
+        this.neighbours.sort(function(a,b) {return (a.y > b.y) ? 1 : ((b.y > a.y) ? -1 : 0);} );
         for (let i = this.neighbours.length -1; i >= 0; i--){
             let x = this.neighbours[i].x;
             let y = this.neighbours[i].y;
             this.neighbours[i].colour = 'grey';
+            this.grid[x].move(y, MAX_Y - 1);
         }
 
         this.render();
